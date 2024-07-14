@@ -27,13 +27,56 @@ export const HomeScreen = ({ navigation }) => {
     navigate.goBack();
   };
   const [currentScreen, setCurrentScreen] = useState("Home");
-
+  const [transaction, setTransaction] = useState([
+    {
+      date: "01/01/2021",
+      time: "12:00 PM",
+      amount: "1000",
+      description: "recieved",
+      clientName: "John Doe",
+    },
+    {
+      date: "01/01/2021",
+      time: "12:00 PM",
+      amount: "1000",
+      description: "transfered",
+      clientName: "John Doe",
+    },
+    {
+      date: "01/01/2021",
+      time: "12:00 PM",
+      amount: "1000",
+      description: "transfered",
+      clientName: "John Doe",
+    },
+    {
+      date: "01/01/2021",
+      time: "12:00 PM",
+      amount: "1000",
+      description: "recieved",
+      clientName: "John Doe",
+    },
+    {
+      date: "01/01/2021",
+      time: "12:00 PM",
+      amount: "1000",
+      description: "recieved",
+      clientName: "John Doe",
+    },
+    {
+      date: "01/01/2021",
+      time: "12:00 PM",
+      amount: "1000",
+      description: "transfered",
+      clientName: "John Doe",
+    },
+  ]);
   const AccoutDetails = {
     userName: "Sarah Muller",
     userImage: userImage,
     cards: [
       {
-        id: "1", // Ensure each card has a unique id
+        id: "1",
         cardNumber: "1234 5678 9101 1121",
         expirationDate: "01/23",
         currency: "US Dollar",
@@ -57,50 +100,7 @@ export const HomeScreen = ({ navigation }) => {
         balance: "40,440.00",
       },
     ],
-    transactions: [
-      {
-        date: "01/01/2021",
-        time: "12:00 PM",
-        amount: "1000",
-        description: "recieved",
-        clientName: "John Doe",
-      },
-      {
-        date: "01/01/2021",
-        time: "12:00 PM",
-        amount: "1000",
-        description: "transfered",
-        clientName: "John Doe",
-      },
-      {
-        date: "01/01/2021",
-        time: "12:00 PM",
-        amount: "1000",
-        description: "transfered",
-        clientName: "John Doe",
-      },
-      {
-        date: "01/01/2021",
-        time: "12:00 PM",
-        amount: "1000",
-        description: "recieved",
-        clientName: "John Doe",
-      },
-      {
-        date: "01/01/2021",
-        time: "12:00 PM",
-        amount: "1000",
-        description: "recieved",
-        clientName: "John Doe",
-      },
-      {
-        date: "01/01/2021",
-        time: "12:00 PM",
-        amount: "1000",
-        description: "transfered",
-        clientName: "John Doe",
-      },
-    ],
+    transactions: transaction.reverse(),
   };
 
   const transferSheetRef = useRef(null);
@@ -126,6 +126,7 @@ export const HomeScreen = ({ navigation }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               marginVertical: 10,
+              paddingHorizontal: 20,
             }}
           >
             <View style={{ flexDirection: "row" }}>
@@ -135,7 +136,9 @@ export const HomeScreen = ({ navigation }) => {
               />
               <View style={{ marginLeft: 20, justifyContent: "center" }}>
                 <Text>Welcome back,</Text>
-                <Text>{AccoutDetails.userName}</Text>
+                <Text style={{ fontWeight: "600" }}>
+                  {AccoutDetails.userName}
+                </Text>
               </View>
             </View>
             <View style={{ justifyContent: "center" }}>
@@ -146,8 +149,12 @@ export const HomeScreen = ({ navigation }) => {
             </View>
           </View>
 
-          <View style={{ marginVertical: 20 }}>
-            <Text>Account</Text>
+          <View style={{ marginVertical: 20, paddingHorizontal: 5 }}>
+            <Text
+              style={{ paddingHorizontal: 15, fontSize: 24, fontWeight: "600" }}
+            >
+              Account
+            </Text>
             <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -169,19 +176,35 @@ export const HomeScreen = ({ navigation }) => {
                 marginVertical: 10,
               }}
             >
-              <Pressable style={{ flexDirection: "row", alignItems: "center" }}>
+              <Pressable
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "#F7F9F2",
+                  padding: 13,
+                  borderRadius: 20,
+                }}
+              >
                 <Image source={Transfer} style={{ width: 30, height: 30 }} />
-                <Text>Request</Text>
+                <Text style={{ fontSize: 19, fontWeight: "500" }}>Request</Text>
               </Pressable>
               <Pressable
-                style={{ flexDirection: "row", alignItems: "center" }}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "#F7F9F2",
+                  padding: 13,
+                  borderRadius: 20,
+                }}
                 onPress={() => {
                   transferSheetRef.current?.expand();
                   setIsOpen(true);
                 }}
               >
                 <Image source={Request} style={{ width: 30, height: 30 }} />
-                <Text>Transfer</Text>
+                <Text style={{ fontSize: 19, fontWeight: "500" }}>
+                  Transfer
+                </Text>
               </Pressable>
               <Pressable>
                 <Image source={add} style={{ width: 50, height: 50 }} />
@@ -206,6 +229,8 @@ export const HomeScreen = ({ navigation }) => {
               cards={AccoutDetails.cards}
               setIsOpen={setIsOpen}
               transferSheetRef={transferSheetRef}
+              setTransaction={setTransaction}
+              transaction={transaction}
             />
           </BottomSheetView>
         </BottomSheet>

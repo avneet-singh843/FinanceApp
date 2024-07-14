@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
+    paddingHorizontal: 20,
   },
   transactionHistoryTitle: {
     fontSize: 20,

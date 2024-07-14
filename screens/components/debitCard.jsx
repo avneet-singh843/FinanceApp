@@ -2,10 +2,21 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-
 const DebitCard = ({ cardInfo }) => {
+  let color =
+    cardInfo.id % 2 !== 0 ? ["#87dcfb", "#87dcfb"] : ["#c8e9ca", "#c8e9ca"];
+  let opacity = 1;
+
+  if (cardInfo.id == "0") {
+    color = ["#fff", "#fff"];
+    opacity = 0.8;
+  }
+
   return (
-    <LinearGradient colors={["#87dcfb", "#87dcfb"]} style={styles.container}>
+    <LinearGradient
+      colors={color}
+      style={[styles.container, { opacity: opacity }]}
+    >
       <View style={styles.cardHeader}>
         <View style={styles.currencyContainer}>
           <Image

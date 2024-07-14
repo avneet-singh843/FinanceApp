@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
-export const TransferCard = ({ cards, setIsOpen, transferSheetRef }) => {
+export const TransferCard = ({
+  cards,
+  setIsOpen,
+  transferSheetRef,
+  setTransaction,
+  transaction,
+}) => {
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
@@ -42,6 +48,16 @@ export const TransferCard = ({ cards, setIsOpen, transferSheetRef }) => {
           if (!isSendDisabled) {
             transferSheetRef.current?.close();
             setIsOpen(false);
+            setTransaction((prevTransactions) => [
+              ...prevTransactions,
+              {
+                date: "14/07/2024",
+                time: new Date().toLocaleTimeString(),
+                amount: amount,
+                description: "transfered",
+                clientName: "Avneet Singh",
+              },
+            ]);
           }
         }}
         disabled={isSendDisabled}

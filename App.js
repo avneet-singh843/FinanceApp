@@ -9,12 +9,7 @@ import { Statistics } from "./screens/statistics";
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <SafeAreaProvider
-      style={{
-        paddingHorizontal: 20,
-        paddingVertical: 30,
-      }}
-    >
+    <SafeAreaProvider style={{ paddingTop: 25 }}>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{

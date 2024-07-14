@@ -1,24 +1,9 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
-
-const DebitCard = ({ balance, accountNumber, validThru }) => (
-  <LinearGradient colors={["#e0f2e9", "#d0e8e0"]} style={styles.cardContainer}>
-    <View style={styles.cardHeader}>
-      <Ionicons name="flag-outline" size={24} color="#000" />
-      <Text style={styles.currencyText}>US Dollar</Text>
-    </View>
-    <Text style={styles.balanceLabel}>Your balance</Text>
-    <Text style={styles.balanceAmount}>${balance}</Text>
-    <View style={styles.cardFooter}>
-      <Text style={styles.accountNumber}>**** {accountNumber}</Text>
-      <Text style={styles.validThru}>Valid Thru {validThru}</Text>
-    </View>
-  </LinearGradient>
-);
-
+import DebitCard from "./components/debitCard";
+const thread = require("../assets/thread.png");
+const transfer = require("../assets/transfer.png");
 export const LandingScreen = ({ navigation }) => {
   const onPressHandler = () => {
     navigation.navigate("Home");
@@ -27,11 +12,76 @@ export const LandingScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.logo}>ProfitPilot.</Text>
-      <View style={styles.cardsContainer}>
-        <DebitCard balance="40,500.80" accountNumber="9934" validThru="05/28" />
+      <View style={[styles.cardsContainer, { marginTop: 80, marginLeft: 50 }]}>
+        <View>
+          <Image
+            source={thread}
+            style={{
+              position: "absolute",
+              zIndex: 100,
+              width: 120,
+              height: 120,
+              transform: [{ translateX: -40 }, { translateY: -120 }],
+            }}
+          />
+          <DebitCard
+            cardInfo={{
+              id: "2",
+              cardNumber: "1234 5678 9101 1121",
+              expirationDate: "01/23",
+              currency: "US Dollar",
+              type: "VISA",
+              balance: "40,440.00",
+            }}
+          />
+        </View>
+        <View
+          style={{
+            position: "absolute",
+            transform: [{ translateX: 120 }, { translateY: -100 }],
+          }}
+        >
+          <DebitCard
+            cardInfo={{
+              id: "0",
+              cardNumber: "1234 5678 9101 1121",
+              expirationDate: "01/23",
+              currency: "US Dollar",
+              type: "VISA",
+              balance: "40,440.00",
+            }}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "#fff",
+            padding: 15,
+            borderRadius: 24,
+            opacity: 0.8,
+            position: "relative",
+            transform: [
+              { translateX: 50 },
+              { translateY: -20 },
+              { rotate: "22deg" },
+            ],
+          }}
+        >
+          <Image source={transfer} style={{ height: 30, width: 30 }} />
+          <Text>Request</Text>
+        </View>
       </View>
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>Your Financial Navigator</Text>
+        <Text style={{ fontSize: 73, lineHeight: 70, fontWeight: "400" }}>
+          Your
+        </Text>
+        <Text style={{ fontSize: 73, lineHeight: 70, fontWeight: "800" }}>
+          Financial
+        </Text>
+        <Text style={{ fontSize: 73, lineHeight: 70, fontWeight: "400" }}>
+          Navigator
+        </Text>
         <Text style={styles.description}>
           Invest in projects that make a difference. Join us in supporting
           impactful initiatives and create a positive change in the world.
@@ -60,6 +110,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   cardContainer: {
+    backgroundColor: "#c8e9ca",
     width: "100%",
     padding: 20,
     borderRadius: 15,
@@ -100,9 +151,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 10,
+    fontSize: 73,
+    lineHeight: 70,
   },
   description: {
     fontSize: 16,
