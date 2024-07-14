@@ -202,12 +202,16 @@ export const HomeScreen = ({ navigation }) => {
 
         <BottomSheet
           ref={transferSheetRef}
-          snapPoints={["40%"]}
+          snapPoints={["43%"]}
           onChange={handleSheetChanges}
           enablePanDownToClose={true}
         >
           <BottomSheetView>
-            <TransferCard />
+            <TransferCard
+              cards={AccoutDetails.cards}
+              setIsOpen={setIsOpen}
+              transferSheetRef={transferSheetRef}
+            />
           </BottomSheetView>
         </BottomSheet>
       </SafeAreaView>

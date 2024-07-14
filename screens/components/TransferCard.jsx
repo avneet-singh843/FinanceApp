@@ -1,30 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
-export const TransferCard = () => {
-  const options = [
-    { label: "Option 1", value: "Option 1" },
-    { label: "Option 2", value: "Option 2" },
-    { label: "Option 3", value: "Option 3" },
-  ];
+export const TransferCard = ({ cards, setIsOpen, transferSheetRef }) => {
+  const [accountNumber, setAccountNumber] = useState("");
+  const [amount, setAmount] = useState("");
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const cardOptions = cards.map((card) => ({
+    label: card.cardNumber,
+    value: card.cardNumber,
+  }));
+
+  const isSendDisabled = !accountNumber || !amount || !selectedCard;
 
   return (
     <View style={styles.container}>
-      <TextInput placeholder="Receiver's Account Number" style={styles.input} />
+      <TextInput
+        placeholder="Receiver's Account Number"
+        style={styles.input}
+        keyboardType="numeric"
+        value={accountNumber}
+        onChangeText={setAccountNumber}
+      />
       <TextInput
         placeholder="Amount"
         style={styles.input}
         keyboardType="numeric"
+        value={amount}
+        onChangeText={setAmount}
       />
       <RNPickerSelect
-        onValueChange={(value) => console.log(value)}
-        items={options}
-        placeholder={{ label: "Select an option", value: null }}
+        onValueChange={(value) => setSelectedCard(value)}
+        items={cardOptions}
+        placeholder={{ label: "Select a card", value: null }}
         style={pickerSelectStyles}
       />
-      <Pressable>
-        <Text>Send Money</Text>
+      <Pressable
+        style={[styles.sendButton, isSendDisabled && styles.sendButtonDisabled]}
+        onPress={() => {
+          if (!isSendDisabled) {
+            transferSheetRef.current?.close();
+            setIsOpen(false);
+          }
+        }}
+        disabled={isSendDisabled}
+      >
+        <Text style={{ color: "white" }}>Send Money</Text>
       </Pressable>
     </View>
   );
@@ -35,18 +57,32 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   input: {
+    fontSize: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 10,
-    marginVertical: 10,
     borderRadius: 5,
+    color: "black",
+    paddingRight: 30,
+    marginVertical: 10,
+  },
+  sendButton: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  sendButtonDisabled: {
+    backgroundColor: "#aaa",
   },
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: "#ccc",
