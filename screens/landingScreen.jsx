@@ -5,9 +5,9 @@ export const LandingScreen = ({ navigation }) => {
   const cardInfo = [
     {
       cardNumber: "1234 5678 9101 1121",
-      cardHolder: "John Doe",
       expirationDate: "01/23",
       currency: "US Dollar",
+      type: "VISA",
       balance: "40,440.00",
     },
   ];
@@ -15,7 +15,7 @@ export const LandingScreen = ({ navigation }) => {
     navigation.navigate("Home");
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <Text>ProfitPilot.</Text>
       <View>
         <Text>IMAGES</Text>
