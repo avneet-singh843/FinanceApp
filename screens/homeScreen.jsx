@@ -14,6 +14,7 @@ import { useRef, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { TransactionHistory } from "./components/transactionHistory";
 import { TransferCard } from "./components/TransferCard";
+import BottomNavigation from "./components/bottomSheetNavigation";
 const userImage = require("../assets/userImage.jpeg");
 const notificationIcon = require("../assets/notification.png");
 const Transfer = require("../assets/transfer.png");
@@ -25,6 +26,7 @@ export const HomeScreen = ({ navigation }) => {
   const handlePressBack = () => {
     navigate.goBack();
   };
+  const [currentScreen, setCurrentScreen] = useState("Home");
 
   const AccoutDetails = {
     userName: "Sarah Muller",
@@ -187,26 +189,19 @@ export const HomeScreen = ({ navigation }) => {
             </View>
           </View>
           <TransactionHistory transactions={AccoutDetails.transactions} />
-          <Pressable>
-            <Text onPress={handlePressBack}>Go back</Text>
-          </Pressable>
-          <Pressable>
-            <Text onPress={() => navigation.navigate("qrScanner")}>
-              Qr Scanner
-            </Text>
-          </Pressable>
-          <Pressable>
-            <Text onPress={() => navigation.navigate("Stats")}>Stats</Text>
-          </Pressable>
         </ScrollView>
 
+        <BottomNavigation
+          navigation={navigation}
+          currentScreen={currentScreen}
+        />
         <BottomSheet
           ref={transferSheetRef}
-          snapPoints={["43%"]}
+          snapPoints={["40%"]}
           onChange={handleSheetChanges}
           enablePanDownToClose={true}
         >
-          <BottomSheetView>
+          <BottomSheetView style={{ zIndex: 10 }}>
             <TransferCard
               cards={AccoutDetails.cards}
               setIsOpen={setIsOpen}
